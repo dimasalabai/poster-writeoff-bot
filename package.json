@@ -1,0 +1,13 @@
+{
+	"name": "poster-writeoff-bot",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"description": "Telegram-бот для сповіщень про списання в Poster",
+	"scripts": {
+		"check-config": "node --env-file=.env src/check-config.js"
+	},
+	"engines": {
+		"node": ">=22"
+	}
+}
