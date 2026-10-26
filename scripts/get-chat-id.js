@@ -1,4 +1,4 @@
-import { telegramRequest } from "./telegram.js";
+import { telegramRequest } from "../src/clients/telegram.js";
 
 const token = process.env.TELEGRAM_BOT_TOKEN?.trim();
 

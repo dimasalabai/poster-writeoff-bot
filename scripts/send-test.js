@@ -1,5 +1,5 @@
 // Надсилає тестове повідомлення, щоб перевірити токен і chat_id.
-import { sendMessage } from "./telegram.js";
+import { sendMessage } from "../src/clients/telegram.js";
 
 const token = process.env.TELEGRAM_BOT_TOKEN?.trim();
 const chatId = process.env.TELEGRAM_CHAT_ID?.trim();

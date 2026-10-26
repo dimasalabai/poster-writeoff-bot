@@ -1,5 +1,5 @@
 // Показує, які налаштування задані. Самі значення НЕ виводить.
-import { REQUIRED, findMissing } from "./config.js";
+import { REQUIRED, findMissing } from "../src/config.js";
 
 const missing = findMissing();
 
