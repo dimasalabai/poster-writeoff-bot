@@ -1,10 +1,12 @@
 // Одноразова перевірка: показує останні ручні списання одного акаунта.
-// Запуск: npm run poster:probe -- 1        (акаунт 1, останні 7 днів)
-//         npm run poster:probe -- 1 30     (акаунт 1, останні 30 днів)
+// Запуск: npm run poster:probe -- 1              (акаунт 1, 7 днів, деталі найновішого)
+//         npm run poster:probe -- 1 30           (акаунт 1, 30 днів)
+//         npm run poster:probe -- 1 7 4481       (деталі конкретного waste_id)
 import { posterRequest, formatPosterDate } from "../src/clients/poster.js";
 
 const accountNumber = process.argv[2] ?? "1";
 const days = Number(process.argv[3] ?? 7);
+const wantedId = process.argv[4];
 
 const token = process.env[`POSTER_${accountNumber}_TOKEN`]?.trim();
 const name =
@@ -28,24 +30,36 @@ try {
 	});
 
 	console.log(`Знайдено списань: ${wastes.length}`);
-	for (const w of wastes) {
-		console.log(
-			`waste_id=${w.waste_id}  date=${w.date}  user_id=${w.user_id}  storage_id=${w.storage_id}  ` +
-				`reason=${w.reason_name}  total_sum=${w.total_sum}  delete=${w.delete}`,
+	console.log("Поля першого запису:", Object.keys(wastes[0] ?? {}).join(", "));
+
+	// Поле delete може бути відсутнє: тоді вважаємо запис не видаленим.
+	const active = wastes.filter((w) => Number(w.delete ?? 0) === 0);
+
+	let target;
+	if (wantedId) {
+		target = active.find((w) => String(w.waste_id) === String(wantedId));
+	} else {
+		// Найновіше = з найбільшим waste_id (за датою не можна: є списання заднім числом).
+		target = active.reduce(
+			(best, w) =>
+				best === null || Number(w.waste_id) > Number(best.waste_id) ? w : best,
+			null,
 		);
 	}
 
-	const latest = wastes.filter((w) => Number(w.delete) === 0).at(-1);
-	if (!latest) {
+	if (!target) {
 		console.log(
-			"\nНемає списань для деталізації. Збільште період або зробіть тестове списання.",
+			"\nНемає списання для деталізації. Збільште період або перевірте waste_id.",
 		);
 		process.exit(0);
 	}
 
-	console.log(`\nДеталі останнього списання (waste_id=${latest.waste_id}):\n`);
+	console.log(`\nКороткий запис (waste_id=${target.waste_id}):\n`);
+	console.log(JSON.stringify(target, null, 2));
+
+	console.log(`\nДеталі (storage.getWaste, waste_id=${target.waste_id}):\n`);
 	const details = await posterRequest(token, "storage.getWaste", {
-		waste_id: latest.waste_id,
+		waste_id: target.waste_id,
 	});
 	console.log(JSON.stringify(details, null, 2));
 } catch (error) {
