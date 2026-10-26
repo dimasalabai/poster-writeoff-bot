@@ -5,7 +5,9 @@
 	"type": "module",
 	"description": "Telegram-бот для сповіщень про списання в Poster",
 	"scripts": {
-		"check-config": "node --env-file=.env src/check-config.js"
+		"check-config": "node --env-file=.env src/check-config.js",
+		"telegram:chat-id": "node --env-file=.env src/get-chat-id.js",
+		"telegram:test": "node --env-file=.env src/send-test.js"
 	},
 	"engines": {
 		"node": ">=22"
