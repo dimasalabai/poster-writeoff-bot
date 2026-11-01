@@ -9,7 +9,8 @@
 		"telegram:chat-id": "node --env-file=.env scripts/get-chat-id.js",
 		"telegram:test": "node --env-file=.env scripts/send-test.js",
 		"poster:probe": "node --env-file=.env scripts/poster-probe.js",
-		"poster:names": "node --env-file=.env scripts/poster-names.js"
+		"poster:names": "node --env-file=.env scripts/poster-names.js",
+		"preview:message": "node --env-file=.env scripts/preview-message.js"
 	},
 	"engines": {
 		"node": ">=22"
