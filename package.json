@@ -10,7 +10,8 @@
 		"telegram:test": "node --env-file=.env scripts/send-test.js",
 		"poster:probe": "node --env-file=.env scripts/poster-probe.js",
 		"poster:names": "node --env-file=.env scripts/poster-names.js",
-		"preview:message": "node --env-file=.env scripts/preview-message.js"
+		"preview:message": "node --env-file=.env scripts/preview-message.js",
+		"dry-run": "node --env-file=.env scripts/dry-run.js"
 	},
 	"engines": {
 		"node": ">=22"

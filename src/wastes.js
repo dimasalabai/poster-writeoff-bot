@@ -17,7 +17,9 @@ function asArray(value, method) {
 function toMap(list, idField, nameField) {
 	const map = new Map();
 	for (const item of list) {
-		const name = String(item[nameField] ?? "").trim();
+		const name = String(item[nameField] ?? "")
+			.replace(/\s+/g, " ")
+			.trim();
 		if (name) map.set(String(item[idField]), name);
 	}
 	return map;
