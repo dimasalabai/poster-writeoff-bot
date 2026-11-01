@@ -8,7 +8,8 @@
 		"check-config": "node --env-file=.env scripts/check-config.js",
 		"telegram:chat-id": "node --env-file=.env scripts/get-chat-id.js",
 		"telegram:test": "node --env-file=.env scripts/send-test.js",
-		"poster:probe": "node --env-file=.env scripts/poster-probe.js"
+		"poster:probe": "node --env-file=.env scripts/poster-probe.js",
+		"poster:names": "node --env-file=.env scripts/poster-names.js"
 	},
 	"engines": {
 		"node": ">=22"
